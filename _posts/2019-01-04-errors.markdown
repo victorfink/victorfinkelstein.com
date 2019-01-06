@@ -1,0 +1,32 @@
+---
+layout: post
+title:  "How to measure your errors"
+date:   2019-01-04
+categories: jekyll update
+---
+
+### Errors in classification
+
+<div style="text-align: justify">
+
+It is very easy in (supervised) classification to measure your errors since you are either correct or wrong. You can use the "table" function to show all the classes and their individuals. Here is an example on the famous iris data set available in R.
+
+</div>
+
+<p align="center">
+	<img src="/images/table.png" width="300">
+</p>
+
+<div style="text-align: justify">
+
+All the numbers that are on the diagonal show the individuals that were correctly associated to a class. All the others were wrongly associated. As you can see here, this algorithm only did one mistake. To compute a good estimation of the number of errors you are doing with a classification algorithm, you can run the algorithm several times and take the mean of the percentage of error.
+
+</div>
+
+### Errors in regression
+
+<div style="text-align: justify">
+
+The most common way to measure your errors is with the MSE and RMSE methods. The MSE for Mean Squared Error is the mean of the difference between the observation and the forecast to the power two. The RMSE for Root Mean Squared Error is the squared root of the MSE.
+
+</div>

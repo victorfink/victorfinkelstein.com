@@ -1,0 +1,59 @@
+---
+layout: post
+title:  "Random forest in R"
+date:   2019-01-02
+categories: jekyll update
+---
+
+
+<div style="text-align: justify">
+
+Random forests algorithms are performant and quite easy to understand. Furthermore, the hyperparameter tuning is also quite easy since there are not a lot of parameters to change. In this post, we will see how to do a random forest on a data set. The hyperparameter tuning will be discussed in another post. Random forests can be used both for classification and regression.
+
+</div>
+
+### What is a random forest ?
+
+<div style="text-align: justify">
+
+Without going too far in details, random forest relies on bagging (bootstrap and model aggregation). When done for classification, the class that has the most votes (between all models) is chosen. For regression, the mean of the models is chosen. In a tree, on each node, a variable from the data set is chosen, and each split from this node correspond to a set of values (of the variable associated to the node).
+
+</div>
+
+### Implementation in R
+
+To implement a random forest algorithm in R, the "randomForest" package is very useful. 
+
+#### Importance of the variables
+
+<div style="text-align: justify">
+
+First of all, you can see how important is a variable in the algorithm in a data set thanks to a parameter of the randomforest function. Just write "importance = TRUE" in the function, and then write use the "importance" function. It will print a percentage for each variable. The closer this percentage is to 100, the more it's important for the regression / classification. Here below is an example.
+
+</div>
+
+<p align="center">
+	<img src="/images/RFimp.png" width="250">
+</p>
+
+<div style="text-align: justify">
+
+This example was done with the "airquality" data set available on R. The importance function shows us that the temperature has a great impact on the quality of the air, whereas the day of the week is not significant. The importance percentage is computed with the prediction error.
+
+</div>
+
+#### Random forest training
+
+<div style="text-align: justify">
+
+Once you know which variables is important in the random forest algorithm, you can chose which variables you put in it accordingly (or not). You can now train your random forest on your data set. Just use the randomforest function with the correct formula. There are some parameters that you can modify in order to improve your prediction / classification but it will be discussed in another post. Once you've train the random forest, you can use the "predict" function to predict the response for a new data set. Note that the variables have to be the same (and with the same name !) between the two data sets. You can also do the prediction directly when you train the random forest by using the xtest parameter, and extracting the response in the random forest you created (the response is in test$predicted).
+
+</div>
+
+## Conclusion
+
+<div style="text-align: justify">
+
+You can now train a random forest and do prediction / classification with it. This is probably one of the easiest machine learning algorithm, and it is quite performant too ! The hyperparameter tuning is also quite easy and can boost further more your model (which can be useful in a competition).
+
+</div>

@@ -1,6 +1,218 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-25T18:01:24+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">DataScience</title><subtitle>Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.</subtitle><entry><title type="html">Finding correlation between variables in a data set</title><link href="http://localhost:4000/correlation" rel="alternate" type="text/html" title="Finding correlation between variables in a data set" /><published>2018-12-25T00:00:00+01:00</published><updated>2018-12-25T00:00:00+01:00</updated><id>http://localhost:4000/correlation</id><content type="html" xml:base="http://localhost:4000/correlation">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-06T19:39:58+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">DataScience</title><subtitle>Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.</subtitle><entry><title type="html">How to measure your errors</title><link href="http://localhost:4000/errors" rel="alternate" type="text/html" title="How to measure your errors" /><published>2019-01-04T00:00:00+01:00</published><updated>2019-01-04T00:00:00+01:00</updated><id>http://localhost:4000/errors</id><content type="html" xml:base="http://localhost:4000/errors">&lt;h3 id=&quot;errors-in-classification&quot;&gt;Errors in classification&lt;/h3&gt;
 
 &lt;div style=&quot;text-align: justify&quot;&gt;
+
+It is very easy in (supervised) classification to measure your errors since you are either correct or wrong. You can use the &quot;table&quot; function to show all the classes and their individuals. Here is an example on the famous iris data set available in R.
+
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/table.png&quot; width=&quot;300&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+All the numbers that are on the diagonal show the individuals that were correctly associated to a class. All the others were wrongly associated. As you can see here, this algorithm only did one mistake. To compute a good estimation of the number of errors you are doing with a classification algorithm, you can run the algorithm several times and take the mean of the percentage of error.
+
+&lt;/div&gt;
+
+&lt;h3 id=&quot;errors-in-regression&quot;&gt;Errors in regression&lt;/h3&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+The most common way to measure your errors is with the MSE and RMSE methods. The MSE for Mean Squared Error is the mean of the difference between the observation and the forecast to the power two. The RMSE for Root Mean Squared Error is the squared root of the MSE.
+
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Errors in classification</summary></entry><entry><title type="html">Random forest in R</title><link href="http://localhost:4000/RF" rel="alternate" type="text/html" title="Random forest in R" /><published>2019-01-02T00:00:00+01:00</published><updated>2019-01-02T00:00:00+01:00</updated><id>http://localhost:4000/RF</id><content type="html" xml:base="http://localhost:4000/RF">&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Random forests algorithms are performant and quite easy to understand. Furthermore, the hyperparameter tuning is also quite easy since there are not a lot of parameters to change. In this post, we will see how to do a random forest on a data set. The hyperparameter tuning will be discussed in another post. Random forests can be used both for classification and regression.
+
+&lt;/div&gt;
+
+&lt;h3 id=&quot;what-is-a-random-forest-&quot;&gt;What is a random forest ?&lt;/h3&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Without going too far in details, random forest relies on bagging (bootstrap and model aggregation). When done for classification, the class that has the most votes (between all models) is chosen. For regression, the mean of the models is chosen. In a tree, on each node, a variable from the data set is chosen, and each split from this node correspond to a set of values (of the variable associated to the node).
+
+&lt;/div&gt;
+
+&lt;h3 id=&quot;implementation-in-r&quot;&gt;Implementation in R&lt;/h3&gt;
+
+&lt;p&gt;To implement a random forest algorithm in R, the “randomForest” package is very useful.&lt;/p&gt;
+
+&lt;h4 id=&quot;importance-of-the-variables&quot;&gt;Importance of the variables&lt;/h4&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+First of all, you can see how important is a variable in the algorithm in a data set thanks to a parameter of the randomforest function. Just write &quot;importance = TRUE&quot; in the function, and then write use the &quot;importance&quot; function. It will print a percentage for each variable. The closer this percentage is to 100, the more it's important for the regression / classification. Here below is an example.
+
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/RFimp.png&quot; width=&quot;250&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+This example was done with the &quot;airquality&quot; data set available on R. The importance function shows us that the temperature has a great impact on the quality of the air, whereas the day of the week is not significant. The importance percentage is computed with the prediction error.
+
+&lt;/div&gt;
+
+&lt;h4 id=&quot;random-forest-training&quot;&gt;Random forest training&lt;/h4&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Once you know which variables is important in the random forest algorithm, you can chose which variables you put in it accordingly (or not). You can now train your random forest on your data set. Just use the randomforest function with the correct formula. There are some parameters that you can modify in order to improve your prediction / classification but it will be discussed in another post. Once you've train the random forest, you can use the &quot;predict&quot; function to predict the response for a new data set. Note that the variables have to be the same (and with the same name !) between the two data sets. You can also do the prediction directly when you train the random forest by using the xtest parameter, and extracting the response in the random forest you created (the response is in test$predicted).
+
+&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+You can now train a random forest and do prediction / classification with it. This is probably one of the easiest machine learning algorithm, and it is quite performant too ! The hyperparameter tuning is also quite easy and can boost further more your model (which can be useful in a competition).
+
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">The basics of regression</title><link href="http://localhost:4000/regression" rel="alternate" type="text/html" title="The basics of regression" /><published>2019-01-02T00:00:00+01:00</published><updated>2019-01-02T00:00:00+01:00</updated><id>http://localhost:4000/regression</id><content type="html" xml:base="http://localhost:4000/regression">&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Regression is probably the easiest machine learning algorithm you can use in Data Science. Despite its simplicity, it's not a bad algorithm and it can be useful. I will show here the basic uses of this algorithm.
+
+&lt;/div&gt;
+
+&lt;h3 id=&quot;what-is-it-&quot;&gt;What is it ?&lt;/h3&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+A regression model is of the form : Y = f(X,b) + e, with f a function given by the user (linear or non linear with regard to b, depending on the type of regression), X is a vector with the variables, Y is the output, b is a vector with the parameters of the regression (this is what is computed during the training), and finally e is the error of the model (e is assumed to be a random variable of mean 0, and e can be assumed to be normal). The trick here is in chosing the good function f and the good variables in X.
+
+&lt;/div&gt;
+
+&lt;h3 id=&quot;implementation-in-r&quot;&gt;Implementation in R&lt;/h3&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Regression is quite easy to implement with the &quot;lm&quot; function in R. The &quot;lm&quot; function only requires a formula of type y ~ x where x are the variables and y the response vector. After you have called the regression function, you can view the summary of your regression with the function summary. Here is an example with a data set about sales in a single shop.
+
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/summReg.png&quot; width=&quot;400&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Here I only did the regression with one variable : the temperature of the day. When printing a summary, there are several important informations. 
+&lt;ul&gt;
+	&lt;li&gt; The first one are the coefficients : you can see an estimate of the value of the parameters and the standard error on those estimations. Next to this value is the p-value associated. The smaller this p-value is, the more the variable associated to this parameter is significant. A simple rule to know if the variable is good is to look at this p-value, if it is smaller than 0.1, it's good, but if it's bigger, you have to try another variable or just delete it. Note that this rule is not always good to use (it mostly depends on the data set and what you're trying to do). &lt;/li&gt;
+	&lt;li&gt; Then you can see the r-squared and the adjusted r-squared. It is a good way to know if your model explains the data set or not. The closer it is to 100%, the better. For complex data set, it is rare to get a adjusted r-squared close to 100%, so this value alone can not tell you the quality of your model &lt;/li&gt; 
+&lt;/ul&gt;
+
+You can also chose to validate your model with other methods. You can simply plot the result of your regression and see if it matchs your data set (if the problem is small in dimension). You can also plot the residuals and look at their distributions.
+
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/resplot.png&quot; width=&quot;350&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Here the residuals are not normal. The model can not be validated. Another method to check this it to use the function &quot;qqnorm&quot; and &quot;qqline&quot; with the residuals, this will show the quantile of the residuals and you will be able to compare them with the quantiles of a normal law.
+
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/qqplot.png&quot; width=&quot;350&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+The points has to be close to the line, which is clearly not the case here. Hence, once again, the model is not valid.
+
+&lt;/div&gt;
+
+&lt;h4 id=&quot;multilinear-regression&quot;&gt;(Multi)linear regression&lt;/h4&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+When doing a linear regression, the function f has to be linear with regard to the parameters b, but not necessarily with regard to the variables. It means that you can do a linear regression with the squared, or exponential of a variable for example. A multilinear regression is when you have more than two parameters in the regression (including the intercept).
+
+&lt;/div&gt;
+
+&lt;h4 id=&quot;interactions-between-variables&quot;&gt;Interactions between variables&lt;/h4&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+Sometimes, linear combination of the variables are not enough. You can have some interactions between variables. For example, again about the sales in a single shop, if this shop sells ice cream, it is reasonnable to say that the temperature and the type of the day (week day or week end) will have an impact on the sales of ice cream. Furthermore, if it is especially hot during a day of the week end, the shop can expect to sale bigger amount of ice cream. Hence, it can be wise in this case to introduce an interaction between the type of the day and the temperature. Remember that each data set requires a different approach so what we are doing here may not be wise in another case.
+
+&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+With this post, you can now compute regression models and verify their validity thanks to differents tools. Despite being one of the simplest method, (multi)linear regression can be quite performant for simple data sets. It's not always a good idea to rush on random forests or neural networks !
+
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">What is PCA and how to do it in R ?</title><link href="http://localhost:4000/PCA" rel="alternate" type="text/html" title="What is PCA and how to do it in R ?" /><published>2018-12-25T00:00:00+01:00</published><updated>2018-12-25T00:00:00+01:00</updated><id>http://localhost:4000/PCA</id><content type="html" xml:base="http://localhost:4000/PCA">&lt;div style=&quot;text-align: justify&quot;&gt;
+
+The principal component analysis (PCA) is a very powerful tool that can be used for multiple things. We will see in this post its most common uses.
+
+&lt;/div&gt;
+
+&lt;h2 id=&quot;principal-component-analysis&quot;&gt;Principal component analysis&lt;/h2&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+&lt;p&gt;
+The goal of a PCA is to change the system of coordinate into a different one in order to reduce the number of dimensions of the problem, without losing (too much) information. To make it simple, the PCA relies on the diagonalization of the covariance matrix. The eigen vectors give us the new system of coordinate and the eigen values give us a way to choose the dimension of the reduced problem thanks to some rules that I will not explain here. There are some tools that can help you know how much information you lost during this transformation. Before explaining how it works in R, I will remind you that it is very important to &lt;b&gt;normalize&lt;/b&gt; (and clean) the data set before working on it. It is not always mandatory to normalize the data set, but it won’t hurt to do so !
+&lt;/p&gt;
+
+&lt;p&gt;
+The package “FactoMineR” in R is very useful to do PCA on data sets. It is important to look at the index of the qualitative variables and specify them in the function PCA, otherwise they can produce an error. After a call to this function, you can see the eigen values and choose the number of dimension for the problem. Here is a picture of what you can get as a result.
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/eigenvalue.png&quot; width=&quot;350&quot; /&gt;
+&lt;/p&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+&lt;p&gt;
+Maybe the simplest and most known rule to choose the dimension of the problem, is to choose the number of eigen values bigger than 1. So here this problem of dimension 10, could be reduce to a problem of dimension 4.
+&lt;/p&gt;
+&lt;p&gt;
+Using the function &quot;summary()&quot;, you can see variance explained by the 10 new axis. It can also be a way to choose the number of axis you want to keep for your reduced problem. Keep in mind that the goal is to reduce the dimension.
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/cumulvar.png&quot; width=&quot;550&quot; /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+What you are looking for is the cumulative percentage of variance. The closer it is to 100%, the more information you explain with the axis. It can also be a way to choose the number of axis to keep.
+&lt;/p&gt;
+
+&lt;p&gt;
+When you use the PCA function by &quot;FactoMineR&quot;, you also get the correlation circle. This is also a useful tool to see different things. First, you can see the variance explained by the first two axis. Each arrow represents a variable. The closer they are to the edge of the circle, the better they are explained by the two axis. Note that all those interpretations are available if the variables are well explained by the two axis. You can also identify independant variables. If two arrows make a 90° angle, they are most probably independant. Finally, if several arrows are &quot;packed&quot;, it means that the associated variables are correlated.
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/cercle.png&quot; width=&quot;550&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+To finish with this post, here is an example taken from wikipedia to illustrate the PCA. On a multivariate Gaussian distribution centered at (1,3) with a standard deviation of 3 in the (0.866,0.5) direction, and of 1 in the orthogonal direction, the computation of the two axis with this method gives us the two axis as you can see below. Those two axis give us the best way to explain the dispersion of the points.
+&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/images/PCA-gaussian.png&quot; width=&quot;350&quot; /&gt;
+&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;div style=&quot;text-align: justify&quot;&gt;
+
+To conclude with, PCA is a very useful tool to understand how the variables in a data set are linked, and how you can reduce the dimension of a problem, without losing too much information. Just keep in mind that the data has to be normalized and clean before doing the PCA.
+
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Finding correlation between variables in a data set</title><link href="http://localhost:4000/correlation" rel="alternate" type="text/html" title="Finding correlation between variables in a data set" /><published>2018-12-25T00:00:00+01:00</published><updated>2018-12-25T00:00:00+01:00</updated><id>http://localhost:4000/correlation</id><content type="html" xml:base="http://localhost:4000/correlation">&lt;div style=&quot;text-align: justify&quot;&gt;
 
 Data analysis is the next step after data cleaning. It is also very important to analyze the data in order to understand the interactions between variables. The first step in this analysis is to find any correlations between variables (columns) of your data set.
 
@@ -30,11 +242,9 @@ This positive correlation means that horsepower, in a car, changes in the same d
 
 It is also important to distinguish strongly correlated variables, and redundant variables. Those can be easily mistaken. If two variables are strongly correlated, it can be because they are in fact explaining literally the same thing. For example, if you are studying the surface of a square depending on the length of the sides and the length of the diagonals, those two variables are explaining exactly the same thing since the length of the sides and the length of the diagonals are related in a square ! Every data set is different but you have to be sure that there are no redundant variables for the next parts of the analysis.
 
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Introduction</summary></entry><entry><title type="html">How to clean a data set ?</title><link href="http://localhost:4000/data-cleaning" rel="alternate" type="text/html" title="How to clean a data set ?" /><published>2018-12-25T00:00:00+01:00</published><updated>2018-12-25T00:00:00+01:00</updated><id>http://localhost:4000/data-cleaning</id><content type="html" xml:base="http://localhost:4000/data-cleaning">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">How to clean a data set ?</title><link href="http://localhost:4000/data-cleaning" rel="alternate" type="text/html" title="How to clean a data set ?" /><published>2018-12-25T00:00:00+01:00</published><updated>2018-12-25T00:00:00+01:00</updated><id>http://localhost:4000/data-cleaning</id><content type="html" xml:base="http://localhost:4000/data-cleaning">&lt;div style=&quot;text-align: justify&quot;&gt;
 
-&lt;div style=&quot;text-align: justify&quot;&gt;
-
-In this post, we focus on the data cleaning. It is very important that **the data is clean before beginning any computation** or visualization as it can produce absurd results or even produce errors.
+In this post, we focus on the data cleaning. It is very important that &lt;b&gt;the data is clean before beginning any computation&lt;/b&gt; or visualization as it can produce absurd results or even produce errors.
 
 &lt;/div&gt;
 
@@ -96,4 +306,4 @@ If the value is absurd, for example if the column contains the temperature of a 
 
 To conclude with, you have to be sure that your data set is clean before doing any computation. If you follow these quick steps, you will be able to clean your data sets very quickly. You just have to remember that every data set is unique. Hence a different cleaning for each data set.
 
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Introduction</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html"></summary></entry></feed>

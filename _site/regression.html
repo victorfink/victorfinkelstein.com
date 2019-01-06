@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>The basics of regression | DataScience</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="The basics of regression" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<meta property="og:description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<link rel="canonical" href="http://localhost:4000/regression" />
+<meta property="og:url" content="http://localhost:4000/regression" />
+<meta property="og:site_name" content="DataScience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-02T00:00:00+01:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.","@type":"BlogPosting","url":"http://localhost:4000/regression","headline":"The basics of regression","dateModified":"2019-01-02T00:00:00+01:00","datePublished":"2019-01-02T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="DataScience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">DataScience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">The basics of regression</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-01-02T00:00:00+01:00" itemprop="datePublished">Jan 2, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <div style="text-align: justify">
+
+Regression is probably the easiest machine learning algorithm you can use in Data Science. Despite its simplicity, it's not a bad algorithm and it can be useful. I will show here the basic uses of this algorithm.
+
+</div>
+
+<h3 id="what-is-it-">What is it ?</h3>
+
+<div style="text-align: justify">
+
+A regression model is of the form : Y = f(X,b) + e, with f a function given by the user (linear or non linear with regard to b, depending on the type of regression), X is a vector with the variables, Y is the output, b is a vector with the parameters of the regression (this is what is computed during the training), and finally e is the error of the model (e is assumed to be a random variable of mean 0, and e can be assumed to be normal). The trick here is in chosing the good function f and the good variables in X.
+
+</div>
+
+<h3 id="implementation-in-r">Implementation in R</h3>
+
+<div style="text-align: justify">
+
+Regression is quite easy to implement with the "lm" function in R. The "lm" function only requires a formula of type y ~ x where x are the variables and y the response vector. After you have called the regression function, you can view the summary of your regression with the function summary. Here is an example with a data set about sales in a single shop.
+
+</div>
+
+<p align="center">
+	<img src="/images/summReg.png" width="400" />
+</p>
+
+<div style="text-align: justify">
+
+Here I only did the regression with one variable : the temperature of the day. When printing a summary, there are several important informations. 
+<ul>
+	<li> The first one are the coefficients : you can see an estimate of the value of the parameters and the standard error on those estimations. Next to this value is the p-value associated. The smaller this p-value is, the more the variable associated to this parameter is significant. A simple rule to know if the variable is good is to look at this p-value, if it is smaller than 0.1, it's good, but if it's bigger, you have to try another variable or just delete it. Note that this rule is not always good to use (it mostly depends on the data set and what you're trying to do). </li>
+	<li> Then you can see the r-squared and the adjusted r-squared. It is a good way to know if your model explains the data set or not. The closer it is to 100%, the better. For complex data set, it is rare to get a adjusted r-squared close to 100%, so this value alone can not tell you the quality of your model </li> 
+</ul>
+
+You can also chose to validate your model with other methods. You can simply plot the result of your regression and see if it matchs your data set (if the problem is small in dimension). You can also plot the residuals and look at their distributions.
+
+</div>
+
+<p align="center">
+	<img src="/images/resplot.png" width="350" />
+</p>
+
+<div style="text-align: justify">
+
+Here the residuals are not normal. The model can not be validated. Another method to check this it to use the function "qqnorm" and "qqline" with the residuals, this will show the quantile of the residuals and you will be able to compare them with the quantiles of a normal law.
+
+</div>
+
+<p align="center">
+	<img src="/images/qqplot.png" width="350" />
+</p>
+
+<div style="text-align: justify">
+
+The points has to be close to the line, which is clearly not the case here. Hence, once again, the model is not valid.
+
+</div>
+
+<h4 id="multilinear-regression">(Multi)linear regression</h4>
+
+<div style="text-align: justify">
+
+When doing a linear regression, the function f has to be linear with regard to the parameters b, but not necessarily with regard to the variables. It means that you can do a linear regression with the squared, or exponential of a variable for example. A multilinear regression is when you have more than two parameters in the regression (including the intercept).
+
+</div>
+
+<h4 id="interactions-between-variables">Interactions between variables</h4>
+
+<div style="text-align: justify">
+
+Sometimes, linear combination of the variables are not enough. You can have some interactions between variables. For example, again about the sales in a single shop, if this shop sells ice cream, it is reasonnable to say that the temperature and the type of the day (week day or week end) will have an impact on the sales of ice cream. Furthermore, if it is especially hot during a day of the week end, the shop can expect to sale bigger amount of ice cream. Hence, it can be wise in this case to introduce an interaction between the type of the day and the temperature. Remember that each data set requires a different approach so what we are doing here may not be wise in another case.
+
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<div style="text-align: justify">
+
+With this post, you can now compute regression models and verify their validity thanks to differents tools. Despite being one of the simplest method, (multi)linear regression can be quite performant for simple data sets. It's not always a good idea to rush on random forests or neural networks !
+
+</div>
+
+
+  </div><a class="u-url" href="/regression" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">DataScience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">DataScience</li><li><a class="u-email" href="mailto:victor@finkelstein.fr">victor@finkelstein.fr</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/victorfink"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">victorfink</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

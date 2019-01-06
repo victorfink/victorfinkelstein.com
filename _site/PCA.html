@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>What is PCA and how to do it in R ? | DataScience</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="What is PCA and how to do it in R ?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<meta property="og:description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<link rel="canonical" href="http://localhost:4000/PCA" />
+<meta property="og:url" content="http://localhost:4000/PCA" />
+<meta property="og:site_name" content="DataScience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-12-25T00:00:00+01:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.","@type":"BlogPosting","url":"http://localhost:4000/PCA","headline":"What is PCA and how to do it in R ?","dateModified":"2018-12-25T00:00:00+01:00","datePublished":"2018-12-25T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/PCA"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="DataScience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">DataScience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">What is PCA and how to do it in R ?</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-12-25T00:00:00+01:00" itemprop="datePublished">Dec 25, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <div style="text-align: justify">
+
+The principal component analysis (PCA) is a very powerful tool that can be used for multiple things. We will see in this post its most common uses.
+
+</div>
+
+<h2 id="principal-component-analysis">Principal component analysis</h2>
+
+<div style="text-align: justify">
+<p>
+The goal of a PCA is to change the system of coordinate into a different one in order to reduce the number of dimensions of the problem, without losing (too much) information. To make it simple, the PCA relies on the diagonalization of the covariance matrix. The eigen vectors give us the new system of coordinate and the eigen values give us a way to choose the dimension of the reduced problem thanks to some rules that I will not explain here. There are some tools that can help you know how much information you lost during this transformation. Before explaining how it works in R, I will remind you that it is very important to <b>normalize</b> (and clean) the data set before working on it. It is not always mandatory to normalize the data set, but it won’t hurt to do so !
+</p>
+
+<p>
+The package “FactoMineR” in R is very useful to do PCA on data sets. It is important to look at the index of the qualitative variables and specify them in the function PCA, otherwise they can produce an error. After a call to this function, you can see the eigen values and choose the number of dimension for the problem. Here is a picture of what you can get as a result.
+</p>
+</div>
+
+<p align="center">
+	<img src="/images/eigenvalue.png" width="350" />
+</p>
+
+<div style="text-align: justify">
+<p>
+Maybe the simplest and most known rule to choose the dimension of the problem, is to choose the number of eigen values bigger than 1. So here this problem of dimension 10, could be reduce to a problem of dimension 4.
+</p>
+<p>
+Using the function "summary()", you can see variance explained by the 10 new axis. It can also be a way to choose the number of axis you want to keep for your reduced problem. Keep in mind that the goal is to reduce the dimension.
+</p>
+
+<p align="center">
+	<img src="/images/cumulvar.png" width="550" />
+</p>
+<p>
+What you are looking for is the cumulative percentage of variance. The closer it is to 100%, the more information you explain with the axis. It can also be a way to choose the number of axis to keep.
+</p>
+
+<p>
+When you use the PCA function by "FactoMineR", you also get the correlation circle. This is also a useful tool to see different things. First, you can see the variance explained by the first two axis. Each arrow represents a variable. The closer they are to the edge of the circle, the better they are explained by the two axis. Note that all those interpretations are available if the variables are well explained by the two axis. You can also identify independant variables. If two arrows make a 90° angle, they are most probably independant. Finally, if several arrows are "packed", it means that the associated variables are correlated.
+</p>
+
+<p align="center">
+	<img src="/images/cercle.png" width="550" />
+</p>
+
+<p>
+To finish with this post, here is an example taken from wikipedia to illustrate the PCA. On a multivariate Gaussian distribution centered at (1,3) with a standard deviation of 3 in the (0.866,0.5) direction, and of 1 in the orthogonal direction, the computation of the two axis with this method gives us the two axis as you can see below. Those two axis give us the best way to explain the dispersion of the points.
+</p>
+<p align="center">
+	<img src="/images/PCA-gaussian.png" width="350" />
+</p>
+
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<div style="text-align: justify">
+
+To conclude with, PCA is a very useful tool to understand how the variables in a data set are linked, and how you can reduce the dimension of a problem, without losing too much information. Just keep in mind that the data has to be normalized and clean before doing the PCA.
+
+</div>
+
+
+  </div><a class="u-url" href="/PCA" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">DataScience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">DataScience</li><li><a class="u-email" href="mailto:victor@finkelstein.fr">victor@finkelstein.fr</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/victorfink"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">victorfink</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

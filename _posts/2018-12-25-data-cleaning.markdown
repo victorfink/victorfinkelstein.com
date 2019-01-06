@@ -5,11 +5,10 @@ date:   2018-12-25
 categories: jekyll update
 ---
 
-## Introduction
 
 <div style="text-align: justify">
 
-In this post, we focus on the data cleaning. It is very important that **the data is clean before beginning any computation** or visualization as it can produce absurd results or even produce errors.
+In this post, we focus on the data cleaning. It is very important that <b>the data is clean before beginning any computation</b> or visualization as it can produce absurd results or even produce errors.
 
 </div>
 

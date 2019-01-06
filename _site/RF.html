@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Random forest in R | DataScience</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Random forest in R" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<meta property="og:description" content="Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email." />
+<link rel="canonical" href="http://localhost:4000/RF" />
+<meta property="og:url" content="http://localhost:4000/RF" />
+<meta property="og:site_name" content="DataScience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-02T00:00:00+01:00" />
+<script type="application/ld+json">
+{"description":"Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.","@type":"BlogPosting","url":"http://localhost:4000/RF","headline":"Random forest in R","dateModified":"2019-01-02T00:00:00+01:00","datePublished":"2019-01-02T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/RF"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="DataScience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">DataScience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Random forest in R</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-01-02T00:00:00+01:00" itemprop="datePublished">Jan 2, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <div style="text-align: justify">
+
+Random forests algorithms are performant and quite easy to understand. Furthermore, the hyperparameter tuning is also quite easy since there are not a lot of parameters to change. In this post, we will see how to do a random forest on a data set. The hyperparameter tuning will be discussed in another post. Random forests can be used both for classification and regression.
+
+</div>
+
+<h3 id="what-is-a-random-forest-">What is a random forest ?</h3>
+
+<div style="text-align: justify">
+
+Without going too far in details, random forest relies on bagging (bootstrap and model aggregation). When done for classification, the class that has the most votes (between all models) is chosen. For regression, the mean of the models is chosen. In a tree, on each node, a variable from the data set is chosen, and each split from this node correspond to a set of values (of the variable associated to the node).
+
+</div>
+
+<h3 id="implementation-in-r">Implementation in R</h3>
+
+<p>To implement a random forest algorithm in R, the “randomForest” package is very useful.</p>
+
+<h4 id="importance-of-the-variables">Importance of the variables</h4>
+
+<div style="text-align: justify">
+
+First of all, you can see how important is a variable in the algorithm in a data set thanks to a parameter of the randomforest function. Just write "importance = TRUE" in the function, and then write use the "importance" function. It will print a percentage for each variable. The closer this percentage is to 100, the more it's important for the regression / classification. Here below is an example.
+
+</div>
+
+<p align="center">
+	<img src="/images/RFimp.png" width="250" />
+</p>
+
+<div style="text-align: justify">
+
+This example was done with the "airquality" data set available on R. The importance function shows us that the temperature has a great impact on the quality of the air, whereas the day of the week is not significant. The importance percentage is computed with the prediction error.
+
+</div>
+
+<h4 id="random-forest-training">Random forest training</h4>
+
+<div style="text-align: justify">
+
+Once you know which variables is important in the random forest algorithm, you can chose which variables you put in it accordingly (or not). You can now train your random forest on your data set. Just use the randomforest function with the correct formula. There are some parameters that you can modify in order to improve your prediction / classification but it will be discussed in another post. Once you've train the random forest, you can use the "predict" function to predict the response for a new data set. Note that the variables have to be the same (and with the same name !) between the two data sets. You can also do the prediction directly when you train the random forest by using the xtest parameter, and extracting the response in the random forest you created (the response is in test$predicted).
+
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<div style="text-align: justify">
+
+You can now train a random forest and do prediction / classification with it. This is probably one of the easiest machine learning algorithm, and it is quite performant too ! The hyperparameter tuning is also quite easy and can boost further more your model (which can be useful in a competition).
+
+</div>
+
+  </div><a class="u-url" href="/RF" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">DataScience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">DataScience</li><li><a class="u-email" href="mailto:victor@finkelstein.fr">victor@finkelstein.fr</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/victorfink"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">victorfink</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Welcome to my website. Here, I will regularly post about useful DataScience tools and guides. If you have any question / suggestion, you can contact me via my email.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
